@@ -37,7 +37,10 @@ export function RegisterForm() {
       router.refresh();
     } catch (err: unknown) {
       if (err instanceof ApiError) {
-        if (err.code === "AUTH_001") {
+        if (
+          err.code === "AUTH_RESOURCE_CONFLICT" ||
+          err.statusCode === 409
+        ) {
           setServerError("Email này đã được sử dụng.");
         } else {
           setServerError(err.message);

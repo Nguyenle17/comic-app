@@ -12,29 +12,22 @@ export function proxy(request: NextRequest) {
   
   const { pathname } = request.nextUrl;
   
-  // Check auth token from cookie
-  const token = request.cookies.get('auth-token')?.value;
-  const userRole = request.cookies.get('user-role')?.value;
+  // The refresh token is HttpOnly and is only used as a presence signal here.
+  // Authorization is enforced by the backend using the access token.
+  const hasRefreshToken = Boolean(
+    request.cookies.get('refresh_token')?.value
+  );
   
   // Check if path is protected
   const isProtected = protectedPaths.some(p => pathname.startsWith(p));
   const isAuthorRoute = authorPaths.some(p => pathname.startsWith(p));
   const isAdminRoute = adminPaths.some(p => pathname.startsWith(p));
   
-  if ((isProtected || isAuthorRoute || isAdminRoute) && !token) {
+  if ((isProtected || isAuthorRoute || isAdminRoute) && !hasRefreshToken) {
     const loginUrl = new URL('/dang-nhap', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
-  
-  if (isAuthorRoute && userRole && !['author', 'admin'].includes(userRole)) {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
-  
-  if (isAdminRoute && userRole !== 'admin') {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
-  
   return NextResponse.next();
 }
 

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
-import { login, ApiError, DEMO_USER } from "@/lib/api/auth";
+import { login, ApiError } from "@/lib/api/auth";
 import { Button } from "@/components/ui/Button";
 
 export function LoginForm() {
@@ -18,7 +18,6 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -34,7 +33,10 @@ export function LoginForm() {
       router.refresh();
     } catch (err: unknown) {
       if (err instanceof ApiError) {
-        if (err.code === "AUTH_002") {
+        if (
+          err.code === "AUTH_INVALID_CREDENTIALS" ||
+          err.statusCode === 401
+        ) {
           setServerError("Email hoặc mật khẩu không đúng.");
         } else {
           setServerError(err.message);
@@ -45,12 +47,6 @@ export function LoginForm() {
         setServerError("Không thể kết nối tới server. Vui lòng thử lại.");
       }
     }
-  }
-
-  // Quick fill with Demo Account
-  function handleQuickDemo() {
-    setValue("email", DEMO_USER.email, { shouldValidate: true });
-    setValue("password", "TruyenViet@2026", { shouldValidate: true });
   }
 
   return (
@@ -66,18 +62,6 @@ export function LoginForm() {
           <div>{serverError}</div>
         </div>
       )}
-
-      {/* Demo Account Quick Pill */}
-      <div className="flex items-center justify-between rounded-xl bg-amber-500/10 px-3 py-2 text-xs text-amber-700 dark:text-amber-300">
-        <span className="font-medium">Thử nghiệm nhanh:</span>
-        <button
-          type="button"
-          onClick={handleQuickDemo}
-          className="font-bold underline hover:text-amber-800 dark:hover:text-amber-200 transition"
-        >
-          Điền tài khoản mẫu
-        </button>
-      </div>
 
       {/* Email Field */}
       <div>

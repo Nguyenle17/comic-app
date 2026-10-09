@@ -234,13 +234,13 @@ export function Header() {
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
               <Link
-                href="/login"
+                href="/auth/login"
                 className="rounded-xl px-3.5 py-2 text-xs font-semibold text-zinc-700 transition hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
               >
                 Đăng nhập
               </Link>
               <Link
-                href="/register"
+                href="/auth/register"
                 className="rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 px-4 py-2 text-xs font-bold text-zinc-950 shadow-sm shadow-amber-500/20 transition hover:from-amber-400 hover:to-amber-300"
               >
                 Đăng ký
