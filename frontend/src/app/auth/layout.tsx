@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tài khoản — TruyenViet",
-  description: "Đăng nhập hoặc đăng ký tài khoản TruyenViet để lưu tủ truyện, theo dõi tác giả và nhận xu miễn phí.",
+  title: "Account — NStories",
+  description: "Sign in or create an NStories account to save your library and follow your favorite authors.",
 };
 
 export default function AuthLayout({

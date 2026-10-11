@@ -4,7 +4,7 @@ export function SectionHeader({
   title,
   subtitle,
   href,
-  actionLabel = "Xem tất cả",
+  actionLabel = "View all",
 }: {
   title: string;
   subtitle?: string;

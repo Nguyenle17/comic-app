@@ -9,17 +9,17 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2.5">
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-rose-500 text-base font-black text-white shadow-sm">
-                T
+                N
               </span>
               <span className="text-xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">
-                Truyen<span className="text-amber-500">Viet</span>
+                N<span className="text-amber-500">Stories</span>
               </span>
             </Link>
             <p className="mt-3 max-w-sm text-xs leading-relaxed text-zinc-500 dark:text-zinc-400">
-              Nền tảng đọc truyện chữ, truyện tranh và cộng đồng sáng tác truyện miễn phí hàng đầu Việt Nam. Cập nhật liên tục hàng nghìn đầu truyện hot mỗi ngày.
+              A modern home for reading, discovering, and creating stories. Explore new releases and connect with authors every day.
             </p>
             <div className="mt-4 flex items-center gap-3 text-xs text-zinc-400">
-              <span>© {new Date().getFullYear()} TruyenViet. All rights reserved.</span>
+              <span>© {new Date().getFullYear()} NStories. All rights reserved.</span>
             </div>
           </div>
 
@@ -59,8 +59,8 @@ export function Footer() {
             </h3>
             <ul className="mt-3 space-y-2 text-xs text-zinc-600 dark:text-zinc-400">
               <li>
-                <Link href="/author/truyen-moi" className="hover:text-amber-500 transition">
-                  Đăng tải sáng tác
+                <Link href="/author/stories/new" className="hover:text-amber-500 transition">
+                  Create a story
                 </Link>
               </li>
               <li>
@@ -113,7 +113,7 @@ export function Footer() {
 
         {/* Disclaimer */}
         <div className="mt-10 border-t border-zinc-100 pt-6 text-[11px] leading-relaxed text-zinc-400 dark:border-zinc-900 dark:text-zinc-500">
-          TruyenViet là nền tảng đọc truyện mở phục vụ cộng đồng đọc giả và người yêu sáng tác. Mọi nội dung do cộng đồng đóng góp được chia sẻ theo đúng tôn chỉ phi thương mại và tuân thủ bản quyền.
+          NStories is an open reading platform for readers and creators. Community contributions are shared under our content and copyright guidelines.
         </div>
       </div>
     </footer>

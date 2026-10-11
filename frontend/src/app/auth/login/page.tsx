@@ -4,8 +4,8 @@ import { AuthCard } from "@/components/auth/AuthCard";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Đăng nhập — TruyenViet",
-  description: "Đăng nhập vào tài khoản TruyenViet để tiếp tục đọc truyện và lưu lịch sử.",
+  title: "Sign in — NStories",
+  description: "Sign in to NStories to continue reading and save your reading history.",
 };
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
       subtitle="Đăng nhập để tiếp tục khám phá hàng nghìn bộ truyện hấp dẫn."
       footer={
         <p>
-          Bằng việc đăng nhập, bạn đồng ý với các điều khoản và quy định của TruyenViet.
+          By signing in, you agree to the NStories terms and policies.
         </p>
       }
     >

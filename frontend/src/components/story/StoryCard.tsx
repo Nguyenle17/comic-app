@@ -5,9 +5,9 @@ import { formatNumber } from "@/lib/utils";
 import type { Story } from "@/lib/types";
 
 const typeLabel: Record<Story["storyType"], string> = {
-  text: "Chữ",
-  comic: "Tranh",
-  original: "Sáng tác",
+  text: "Text",
+  comic: "Comic",
+  original: "Original",
 };
 
 interface StoryCardProps {
@@ -17,9 +17,8 @@ interface StoryCardProps {
 
 export function StoryCard({ story, rank }: StoryCardProps) {
   const isHot = story.viewCount >= 100_000 || story.isHot;
-  const isNew =
-    story.isNew ||
-    Date.now() - new Date(story.createdAt).getTime() < 1000 * 60 * 60 * 24 * 30;
+  // Keep the badge deterministic across server and client renders.
+  const isNew = story.isNew;
 
   return (
     <Link
@@ -57,7 +56,7 @@ export function StoryCard({ story, rank }: StoryCardProps) {
         {rank === undefined && (
           <div className="absolute left-2 top-2 flex gap-1">
             {isHot && <Badge variant="hot">Hot</Badge>}
-            {isNew && <Badge variant="new">Mới</Badge>}
+            {isNew && <Badge variant="new">New</Badge>}
           </div>
         )}
 
@@ -68,7 +67,7 @@ export function StoryCard({ story, rank }: StoryCardProps) {
 
         {/* Chapter counter overlay on bottom-left */}
         <div className="absolute bottom-2 left-2 rounded-md bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
-          {story.chapterCount} chương
+          {story.chapterCount} chapters
         </div>
       </div>
 

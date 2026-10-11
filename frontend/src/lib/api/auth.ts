@@ -28,7 +28,7 @@ async function parseResponse<T>(response: Response): Promise<T> {
 
   if (!response.ok) {
     throw new ApiError(
-      body?.message ?? "Yêu cầu không thành công",
+      body?.message ?? "The request failed",
       body?.code ?? "API_ERROR",
       response.status
     );

@@ -3,8 +3,8 @@ import { AuthCard } from "@/components/auth/AuthCard";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 
 export const metadata: Metadata = {
-  title: "Đăng ký tài khoản — TruyenViet",
-  description: "Tạo tài khoản miễn phí tại TruyenViet, nhận ngay 100 xu thưởng thành viên mới.",
+  title: "Create an account — NStories",
+  description: "Create a free NStories account and start building your personal library.",
 };
 
 export default function RegisterPage() {

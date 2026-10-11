@@ -40,10 +40,10 @@ export function AuthCard({ title, subtitle, children, footer }: AuthCardProps) {
         <div className="mb-6 flex flex-col items-center text-center">
           <Link href="/" className="mb-3 flex items-center gap-2.5">
             <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-rose-500 text-lg font-black text-white shadow-md shadow-amber-500/30">
-              T
+              N
             </span>
             <span className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-              Truyen<span className="text-amber-500">Viet</span>
+              N<span className="text-amber-500">Stories</span>
             </span>
           </Link>
           <h1 className="text-xl font-bold tracking-tight text-zinc-900 sm:text-2xl dark:text-zinc-50">

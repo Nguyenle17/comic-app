@@ -24,3 +24,6 @@ cookie:
   refresh-name: refresh_token
   secure: false
   same-site: "Lax"
+
+storage:
+  upload-dir: uploads

@@ -6,8 +6,8 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
   // Protected routes that require authentication
-  const protectedPaths = ['/tai-khoan', '/vi-cua-toi', '/tu-truyen', '/lich-su', '/thong-bao'];
-  const authorPaths = ['/tac-gia/truyen-cua-toi', '/tac-gia/tao-truyen', '/tac-gia/sua-truyen', '/tac-gia/quan-ly-chuong', '/tac-gia/soan-chuong'];
+  const protectedPaths = ['/account', '/become-author', '/vi-cua-toi', '/tu-truyen', '/lich-su', '/thong-bao'];
+  const authorPaths = ['/author'];
   const adminPaths = ['/admin'];
   
   const { pathname } = request.nextUrl;
@@ -33,12 +33,13 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/tai-khoan/:path*',
+    '/account/:path*',
     '/vi-cua-toi/:path*',
     '/tu-truyen/:path*',
     '/lich-su/:path*',
     '/thong-bao/:path*',
-    '/tac-gia/:path*',
+    '/become-author/:path*',
+    '/author/:path*',
     '/admin/:path*',
   ],
 };

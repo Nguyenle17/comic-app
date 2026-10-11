@@ -5,9 +5,9 @@ import Providers from "@/components/layout/Providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TruyenViet — Đọc truyện chữ & truyện tranh online",
+  title: "NStories — Read and create stories online",
   description:
-    "Đọc truyện chữ, truyện tranh và truyện sáng tác miễn phí. Hàng nghìn bộ truyện cập nhật mỗi ngày tại TruyenViet.",
+    "Read text stories, comics, and original works. Discover new stories and follow your favorite authors on NStories.",
 };
 
 export default function RootLayout({

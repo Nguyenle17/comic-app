@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
-  name: 'TruyenViet',
-  description: 'Nền tảng đọc truyện chữ, truyện tranh và sáng tác miễn phí hàng đầu Việt Nam.',
+  name: 'NStories',
+  description: 'A modern platform for reading, discovering, and creating stories.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   apiBaseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
 };

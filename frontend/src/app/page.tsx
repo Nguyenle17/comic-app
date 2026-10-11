@@ -152,11 +152,11 @@ export default function HomePage() {
             Sáng tác câu chuyện của bạn, nhận xu từ hàng vạn độc giả
           </h2>
           <p className="text-xs leading-relaxed text-zinc-300 sm:text-sm">
-            TruyenViet cung cấp nền tảng đăng truyện miễn phí với trình soạn thảo hiện đại, thống kê chi tiết lượt đọc và hệ thống donate xu trực tiếp từ độc giả.
+            NStories provides a free publishing platform with a modern editor, reading analytics, and direct reader support.
           </p>
           <div className="mt-3 flex flex-wrap gap-3">
             <Link
-              href="/author/truyen-moi"
+              href="/author/stories/new"
               className="inline-flex h-11 items-center rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 px-6 text-sm font-bold text-zinc-950 transition hover:from-amber-300 hover:to-amber-400 shadow-md shadow-amber-500/20"
             >
               Bắt đầu sáng tác ngay
@@ -183,7 +183,7 @@ function EmptyState({ message }: { message: string }) {
     <div className="rounded-3xl border border-dashed border-zinc-200 bg-white/50 p-10 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400">
       <p className="font-medium">{message}</p>
       <Link
-        href="/author/truyen-moi"
+        href="/author/stories/new"
         className="mt-3 inline-flex text-xs font-bold text-amber-500 hover:underline"
       >
         Đăng ký làm tác giả ngay →
