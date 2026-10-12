@@ -15,7 +15,7 @@ import com.ncomics.backend.modules.auth.dto.RegisterRequest;
 import com.ncomics.backend.modules.auth.dto.UserResponse;
 import com.ncomics.backend.modules.auth.security.JwtService;
 import com.ncomics.backend.common.exception.InvalidTokenException;
-import com.ncomics.backend.modules.user.User;
+import com.ncomics.backend.modules.user.entity.User;
 import com.ncomics.backend.modules.user.UserRepository;
 import com.ncomics.backend.modules.user.enums.Role;
 import com.ncomics.backend.modules.user.enums.UserStatus;

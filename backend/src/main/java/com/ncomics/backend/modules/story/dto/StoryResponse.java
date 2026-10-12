@@ -2,7 +2,7 @@ package com.ncomics.backend.modules.story.dto;
 
 import java.time.LocalDateTime;
 
-import com.ncomics.backend.modules.story.Story;
+import com.ncomics.backend.modules.story.entity.Story;
 
 public record StoryResponse(
         Long id,

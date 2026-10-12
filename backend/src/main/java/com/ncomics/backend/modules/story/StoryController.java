@@ -7,7 +7,7 @@ public class StoryController {
     
     private final StoryService storyService;
 
-    public StoryController() {
+    public StoryController(StoryService storyService) {
         this.storyService = storyService;
     }
     

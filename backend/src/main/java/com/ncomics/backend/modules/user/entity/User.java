@@ -1,4 +1,4 @@
-package com.ncomics.backend.modules.user;
+package com.ncomics.backend.modules.user.entity;
 
 import java.time.LocalDateTime;
 

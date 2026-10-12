@@ -2,7 +2,7 @@ package com.ncomics.backend.modules.user.dto;
 
 import java.time.LocalDateTime;
 
-import com.ncomics.backend.modules.user.User;
+import com.ncomics.backend.modules.user.entity.User;
 
 public record UserProfileResponse(
         Long id,
