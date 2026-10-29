@@ -11,5 +11,7 @@ public record LoginRequest(
 
     @NotBlank 
     @Size(min = 8, max = 100)
-    String password
+    String password,
+
+    Boolean remember
 ) {}

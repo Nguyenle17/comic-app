@@ -2,6 +2,8 @@ package com.ncomics.backend.modules.rating.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import com.ncomics.backend.modules.user.entity.User;
 import com.ncomics.backend.modules.story.entity.Story;

@@ -2,6 +2,7 @@ package com.ncomics.backend.modules.auth.security;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
@@ -42,6 +43,7 @@ public class JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .claims(extraClaims)
+                .id(UUID.randomUUID().toString())
                 .subject(userDetails.getUsername())
                 .issuedAt(now)
                 .expiration(new Date(now.getTime() + expirationMs))
@@ -51,6 +53,10 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+
+    public Date extractExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

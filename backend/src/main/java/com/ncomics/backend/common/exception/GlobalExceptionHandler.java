@@ -2,15 +2,16 @@ package com.ncomics.backend.common.exception;
 
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import com.ncomics.backend.common.exception.InvalidTokenException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,6 +34,15 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(LockedException.class)
+    public ResponseEntity<Map<String, Object>> handleLockedAccount() {
+        return error(
+                HttpStatus.FORBIDDEN,
+                "AUTH_ACCOUNT_LOCKED",
+                "Tài khoản đã bị khóa"
+        );
+    }
+
     @ExceptionHandler(InvalidTokenException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidToken(
             InvalidTokenException exception
@@ -52,24 +62,14 @@ public class GlobalExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .findFirst()
-                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .map(fieldError ->
+                        fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .orElse("Request không hợp lệ");
 
         return error(
                 HttpStatus.BAD_REQUEST,
                 "VALIDATION_ERROR",
                 message
-        );
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgument(
-            IllegalArgumentException exception
-    ) {
-        return error(
-                HttpStatus.CONFLICT,
-                "AUTH_RESOURCE_CONFLICT",
-                exception.getMessage()
         );
     }
 
@@ -81,6 +81,37 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT,
                 "AUTH_RESOURCE_CONFLICT",
                 exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrityViolation() {
+        return error(
+                HttpStatus.CONFLICT,
+                "AUTH_RESOURCE_CONFLICT",
+                "Dữ liệu đã tồn tại"
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(
+            IllegalArgumentException exception
+    ) {
+        return error(
+                HttpStatus.NOT_FOUND,
+                "RESOURCE_NOT_FOUND",
+                exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthentication(
+            AuthenticationException exception
+    ) {
+        return error(
+                HttpStatus.UNAUTHORIZED,
+                "AUTH_UNAUTHORIZED",
+                "Xác thực không thành công"
         );
     }
 
