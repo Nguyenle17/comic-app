@@ -1,25 +1,25 @@
-import { Suspense } from "react";
-import type { Metadata } from "next";
-import { AuthCard } from "@/components/auth/AuthCard";
-import { LoginForm } from "@/components/auth/LoginForm";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Sign in — NStories",
-  description: "Sign in to NStories to continue reading and save your reading history.",
-};
+import { Suspense } from "react";
+import { AuthCard } from "@/features/auth/components/AuthCard";
+import { LoginForm } from "@/features/auth/components/LoginForm";
+import { useT } from "@/features/preferences/i18n";
 
 export default function LoginPage() {
+  const t = useT();
   return (
     <AuthCard
-      title="Chào mừng trở lại!"
-      subtitle="Đăng nhập để tiếp tục khám phá hàng nghìn bộ truyện hấp dẫn."
-      footer={
-        <p>
-          By signing in, you agree to the NStories terms and policies.
-        </p>
-      }
+      title={t("auth.loginTitle")}
+      subtitle={t("auth.loginSubtitle")}
+      footer={<p>{t("auth.loginFooter")}</p>}
     >
-      <Suspense fallback={<div className="h-48 flex items-center justify-center text-sm text-zinc-400">Đang tải...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex h-48 items-center justify-center text-sm text-muted">
+            {t("common.loading")}
+          </div>
+        }
+      >
         <LoginForm />
       </Suspense>
     </AuthCard>

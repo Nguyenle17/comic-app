@@ -1,22 +1,16 @@
-import type { Metadata } from "next";
-import { AuthCard } from "@/components/auth/AuthCard";
-import { RegisterForm } from "@/components/auth/RegisterForm";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Create an account — NStories",
-  description: "Create a free NStories account and start building your personal library.",
-};
+import { AuthCard } from "@/features/auth/components/AuthCard";
+import { RegisterForm } from "@/features/auth/components/RegisterForm";
+import { useT } from "@/features/preferences/i18n";
 
 export default function RegisterPage() {
+  const t = useT();
   return (
     <AuthCard
-      title="Tạo tài khoản mới"
-      subtitle="Đăng ký tài khoản miễn phí, nhận ngay 100 xu đọc truyện."
-      footer={
-        <p>
-          Bạn đã có tài khoản? Hãy chuyển sang tab Đăng nhập ở trên.
-        </p>
-      }
+      title={t("auth.registerTitle")}
+      subtitle={t("auth.registerSubtitle")}
+      footer={<p>{t("auth.registerFooter")}</p>}
     >
       <RegisterForm />
     </AuthCard>

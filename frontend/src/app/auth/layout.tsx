@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
+import { AuthAside } from "@/features/auth/components/AuthAside";
 
 export const metadata: Metadata = {
-  title: "Account — NStories",
-  description: "Sign in or create an NStories account to save your library and follow your favorite authors.",
+  title: "Tài khoản — NStories",
+  description:
+    "Đăng nhập hoặc tạo tài khoản NStories để lưu tủ truyện và theo dõi tác giả yêu thích.",
 };
 
 export default function AuthLayout({
@@ -11,14 +13,11 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="pointer-events-none absolute -left-40 -top-40 h-96 w-96 rounded-full bg-amber-400/15 blur-3xl dark:bg-amber-400/10" />
-      <div className="pointer-events-none absolute -right-40 -bottom-40 h-96 w-96 rounded-full bg-rose-500/15 blur-3xl dark:bg-rose-500/10" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-indigo-500/10 blur-3xl dark:bg-indigo-500/5" />
-
-      {/* Main Container */}
-      <div className="relative z-10 w-full">{children}</div>
+    <div className="mx-auto grid min-h-[70vh] w-full max-w-6xl gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[0.9fr_1fr] lg:gap-0 lg:px-8 lg:py-16">
+      <AuthAside />
+      <div className="flex items-center justify-center lg:pl-12">
+        <div className="w-full max-w-md">{children}</div>
+      </div>
     </div>
   );
 }

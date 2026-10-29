@@ -10,24 +10,24 @@ export interface ButtonProps
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
   default:
-    "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 shadow-sm",
+    "bg-ink text-surface hover:bg-ink-soft border border-ink",
   secondary:
-    "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700",
+    "bg-surface text-ink border border-line hover:border-line-strong",
   outline:
-    "border border-zinc-200 bg-transparent text-zinc-900 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-100 dark:hover:bg-zinc-800",
+    "border border-line bg-transparent text-ink hover:border-line-strong hover:bg-surface",
   ghost:
-    "bg-transparent text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800",
+    "bg-transparent text-ink-soft hover:bg-surface hover:text-ink",
   amber:
-    "bg-gradient-to-r from-amber-500 to-amber-400 text-zinc-950 font-semibold hover:from-amber-400 hover:to-amber-300 shadow-sm shadow-amber-500/20 active:scale-[0.98]",
+    "bg-accent text-surface border border-accent hover:bg-accent-strong hover:border-accent-strong",
   danger:
-    "bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600",
+    "border border-accent bg-transparent text-accent hover:bg-accent-soft",
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
-  sm: "h-8 px-3 text-xs rounded-lg gap-1.5",
-  md: "h-10 px-4 text-sm rounded-xl gap-2",
-  lg: "h-12 px-6 text-base rounded-2xl gap-2.5",
-  icon: "h-10 w-10 p-0 rounded-xl justify-center",
+  sm: "h-8 px-3 text-xs rounded-sm gap-1.5",
+  md: "h-10 px-4 text-sm rounded-sm gap-2",
+  lg: "h-12 px-6 text-sm rounded-sm gap-2.5",
+  icon: "h-10 w-10 p-0 rounded-sm justify-center",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -48,7 +48,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled || isLoading}
         className={cn(
-          "inline-flex items-center justify-center font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none select-none",
+          "inline-flex select-none items-center justify-center font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-50",
           variantStyles[variant],
           sizeStyles[size],
           className
@@ -57,10 +57,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && (
           <svg
-            className="animate-spin -ml-1 mr-2 h-4 w-4 text-current"
+            className="mr-2 h-4 w-4 animate-spin text-current"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <circle
               className="opacity-25"

@@ -22,8 +22,3 @@ export interface PublicUserProfile {
   totalViews: number;
   createdAt: string;
 }
-
-export interface AuthResponse {
-  user: User;
-  accessToken: string;
-}

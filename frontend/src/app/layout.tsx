@@ -1,14 +1,30 @@
 import type { Metadata } from "next";
+import { Be_Vietnam_Pro, Lora } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import Providers from "@/components/layout/Providers";
+import { AppProvider } from "@/app/providers/AppProvider";
+import { AuthProvider } from "@/app/providers/AuthProvider";
 import "./globals.css";
 
+const sans = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-be-vietnam",
+});
+
+const serif = Lora({
+  subsets: ["latin", "vietnamese"],
+  weight: ["500", "600", "700"],
+  variable: "--font-lora",
+});
+
 export const metadata: Metadata = {
-  title: "NStories — Read and create stories online",
+  title: "NStories — Đọc và viết truyện",
   description:
-    "Read text stories, comics, and original works. Discover new stories and follow your favorite authors on NStories.",
+    "Đọc truyện chữ, truyện tranh và sáng tác Việt. Khám phá tác phẩm mới và theo dõi tác giả bạn yêu thích.",
 };
+
+const themeInitScript = `try{var s=JSON.parse(localStorage.getItem('ui-storage')||'{}');if(s.state&&s.state.isDarkMode)document.documentElement.classList.add('dark')}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -17,12 +33,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className="flex min-h-dvh flex-col bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100 selection:bg-amber-400 selection:text-zinc-950">
-        <Providers>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </Providers>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body
+        className={`${sans.variable} ${serif.variable} flex min-h-dvh flex-col bg-paper text-ink antialiased`}
+      >
+        <AppProvider>
+          <AuthProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </AuthProvider>
+        </AppProvider>
       </body>
     </html>
   );

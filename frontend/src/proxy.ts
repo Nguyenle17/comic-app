@@ -24,7 +24,7 @@ export function proxy(request: NextRequest) {
   const isAdminRoute = adminPaths.some(p => pathname.startsWith(p));
   
   if ((isProtected || isAuthorRoute || isAdminRoute) && !hasRefreshToken) {
-    const loginUrl = new URL('/dang-nhap', request.url);
+    const loginUrl = new URL('/auth/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
