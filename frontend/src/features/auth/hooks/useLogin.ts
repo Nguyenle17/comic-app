@@ -8,11 +8,13 @@ import { loginSchema, type LoginInput } from "@/features/auth/schemas/auth";
 import { login } from "@/features/auth/api";
 import { ApiError } from "@/lib/api-client";
 import { useT } from "@/features/preferences/i18n";
+import { useUiStore } from "@/features/preferences/stores/ui-store";
 
 export function useLogin() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useT();
+  const addToast = useUiStore((state) => state.addToast);
   const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -25,6 +27,7 @@ export function useLogin() {
     setServerError(null);
     try {
       await login(data);
+      addToast({ type: "success", message: t("toast.loginSuccess") });
       const redirectParam = searchParams.get("redirect");
       const redirect =
         redirectParam &&
@@ -35,20 +38,17 @@ export function useLogin() {
       router.push(redirect);
       router.refresh();
     } catch (err: unknown) {
-      if (err instanceof ApiError) {
-        if (
-          err.code === "AUTH_INVALID_CREDENTIALS" ||
-          err.statusCode === 401
-        ) {
-          setServerError(t("auth.invalidCredentials"));
-        } else {
-          setServerError(err.message);
-        }
-      } else if (err instanceof Error) {
-        setServerError(err.message);
-      } else {
-        setServerError(t("auth.connectionError"));
-      }
+      const message =
+        err instanceof ApiError
+          ? err.code === "AUTH_INVALID_CREDENTIALS" || err.statusCode === 401
+            ? t("auth.invalidCredentials")
+            : err.message
+          : err instanceof Error
+            ? err.message
+            : t("auth.connectionError");
+
+      setServerError(message);
+      addToast({ type: "error", message });
     }
   }
 

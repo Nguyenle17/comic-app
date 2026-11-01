@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createStory,
   deleteStory,
+  getCategories,
   updateStory,
   uploadStoryCover,
   type CreateStoryInput,
   type ManagedStory,
 } from "@/features/story/api";
+import type { Category } from "@/features/story/types/story";
 import { ApiError } from "@/lib/api-client";
 import { useT } from "@/features/preferences/i18n";
+import { useUiStore } from "@/features/preferences/stores/ui-store";
 
 interface StoryEditorProps {
   storyId?: number;
@@ -26,6 +29,7 @@ export function StoryEditor({
   onDeleted,
 }: StoryEditorProps) {
   const t = useT();
+  const addToast = useUiStore((state) => state.addToast);
   const [title, setTitle] = useState(initialStory?.title ?? "");
   const [slug, setSlug] = useState(initialStory?.slug ?? "");
   const [description, setDescription] = useState(
@@ -34,9 +38,43 @@ export function StoryEditor({
   const [storyType, setStoryType] = useState<"text" | "comic">(
     initialStory?.storyType === "comic" ? "comic" : "text"
   );
+  const [visible, setVisible] = useState(initialStory?.visible ?? true);
+  const [categories, setCategories] = useState<Category[] | null>(null);
+  const [categoryIds, setCategoryIds] = useState<number[]>(
+    initialStory?.categories?.map((category) => category.id) ?? []
+  );
   const [cover, setCover] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getCategories()
+      .then((data) => {
+        if (!cancelled) {
+          setCategories(data);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setCategories([]);
+          addToast({ type: "error", message: t("editor.categoriesLoadError") });
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [t, addToast]);
+
+  function toggleCategory(categoryId: number) {
+    setCategoryIds((current) =>
+      current.includes(categoryId)
+        ? current.filter((id) => id !== categoryId)
+        : [...current, categoryId]
+    );
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -49,6 +87,8 @@ export function StoryEditor({
         slug,
         description,
         storyType,
+        visible,
+        categoryIds,
       };
 
       const story = storyId
@@ -61,10 +101,15 @@ export function StoryEditor({
           : story;
 
       onSaved?.(storyWithCover);
+      addToast({
+        type: "success",
+        message: t(storyId ? "toast.storyUpdated" : "toast.storyCreated"),
+      });
     } catch (cause) {
-      setError(
-        cause instanceof ApiError ? cause.message : t("editor.saveError")
-      );
+      const message =
+        cause instanceof ApiError ? cause.message : t("editor.saveError");
+      setError(message);
+      addToast({ type: "error", message });
     } finally {
       setIsSaving(false);
     }
@@ -81,10 +126,12 @@ export function StoryEditor({
     try {
       await deleteStory(storyId);
       onDeleted?.();
+      addToast({ type: "success", message: t("toast.storyDeleted") });
     } catch (cause) {
-      setError(
-        cause instanceof ApiError ? cause.message : t("editor.deleteError")
-      );
+      const message =
+        cause instanceof ApiError ? cause.message : t("editor.deleteError");
+      setError(message);
+      addToast({ type: "error", message });
     } finally {
       setIsSaving(false);
     }
@@ -144,6 +191,37 @@ export function StoryEditor({
             className="field h-auto min-h-40 resize-y py-3 leading-6"
           />
         </div>
+
+        <fieldset>
+          <legend className="mb-1.5 block text-xs font-medium text-ink-soft">
+            {t("editor.categories")}
+          </legend>
+          <p className="mb-2 text-[11px] text-muted">
+            {t("editor.categoriesHint")}
+          </p>
+          {categories === null ? (
+            <p className="text-xs text-muted">{t("common.loading")}</p>
+          ) : categories.length === 0 ? (
+            <p className="text-xs text-muted">{t("editor.noCategories")}</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {categories.map((category) => (
+                <label
+                  key={category.id}
+                  className="flex cursor-pointer items-center gap-2 text-xs text-ink-soft"
+                >
+                  <input
+                    type="checkbox"
+                    checked={categoryIds.includes(category.id)}
+                    onChange={() => toggleCategory(category.id)}
+                    className="accent-accent"
+                  />
+                  {category.name}
+                </label>
+              ))}
+            </div>
+          )}
+        </fieldset>
       </div>
 
       <aside className="space-y-6 border-t border-line pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
@@ -162,6 +240,24 @@ export function StoryEditor({
             <option value="text">{t("editor.typeText")}</option>
             <option value="comic">{t("editor.typeComic")}</option>
           </select>
+        </div>
+
+        <div>
+          <label htmlFor="story-visibility" className="mb-1.5 block text-xs font-medium text-ink-soft">
+            {t("editor.visibility")}
+          </label>
+          <select
+            id="story-visibility"
+            value={visible ? "visible" : "hidden"}
+            onChange={(event) => setVisible(event.target.value === "visible")}
+            className="field"
+          >
+            <option value="visible">{t("editor.visible")}</option>
+            <option value="hidden">{t("editor.hidden")}</option>
+          </select>
+          <p className="mt-1.5 text-[11px] text-muted">
+            {t("editor.visibilityHint")}
+          </p>
         </div>
 
         <div>

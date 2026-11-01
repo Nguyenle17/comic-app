@@ -38,7 +38,7 @@ export const useUiStore = create<UiState>()(
       toggleMobileMenu: () => set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
       addToast: (toastData) => {
         const id = Math.random().toString(36).substring(2, 9);
-        const toast = { ...toastData, id, duration: toastData.duration || 3000 };
+        const toast = { ...toastData, id, duration: toastData.duration || 4000 };
         set((state) => ({ toasts: [...state.toasts, toast] }));
         setTimeout(() => {
           get().removeToast(id);
@@ -56,5 +56,3 @@ export const useUiStore = create<UiState>()(
     }
   )
 );
-
-export const useUIStore = useUiStore;

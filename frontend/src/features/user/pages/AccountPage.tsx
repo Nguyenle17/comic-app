@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAuthStore } from "@/features/auth/stores/auth-store";
 import { useT } from "@/features/preferences/i18n";
 import { useBecomeAuthor } from "@/features/user/hooks/useBecomeAuthor";
+import { isAuthorRole } from "@/types/user";
 
 export default function AccountPage() {
   const t = useT();
@@ -30,7 +31,7 @@ export default function AccountPage() {
     );
   }
 
-  const isAuthor = user.role === "author" || user.role === "admin";
+  const isAuthor = isAuthorRole(user.role);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
@@ -102,7 +103,7 @@ export default function AccountPage() {
                   hint={t("stories.newSubtitle")}
                 />
                 <ActionRow
-                  href="/author/stories/new"
+                  href="/author/stories"
                   label={t("account.manageStories")}
                   hint={t("stories.editSubtitle")}
                 />

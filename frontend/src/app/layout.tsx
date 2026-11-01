@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Lora } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/Toaster";
 import { AppProvider } from "@/app/providers/AppProvider";
 import { AuthProvider } from "@/app/providers/AuthProvider";
 import "./globals.css";
@@ -44,6 +45,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
+            <Toaster />
           </AuthProvider>
         </AppProvider>
       </body>

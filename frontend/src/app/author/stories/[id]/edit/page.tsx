@@ -75,7 +75,7 @@ export default function EditStoryPage() {
           storyId={story.id}
           initialStory={story}
           onSaved={setStory}
-          onDeleted={() => router.push("/author/stories/new")}
+          onDeleted={() => router.push("/author/stories")}
         />
       </div>
     </main>

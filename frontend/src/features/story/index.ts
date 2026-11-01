@@ -2,6 +2,7 @@ export { HeroBanner } from "./components/HeroBanner";
 export { SectionHeader } from "./components/SectionHeader";
 export { RankedStoryRow } from "./components/RankedStoryRow";
 export { StoryEditor } from "./components/StoryEditor";
+export { AuthorStoryManager } from "./components/AuthorStoryManager";
 export { useHomeStories } from "./hooks/useHomeStories";
 export { mockStories } from "./data/mock-stories";
 export { STORY_CATEGORIES } from "./constants";

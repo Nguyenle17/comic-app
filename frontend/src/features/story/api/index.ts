@@ -1,6 +1,9 @@
-import type { StoryType } from "@/features/story/types/story";
+import type { Category, StoryType } from "@/features/story/types/story";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { ApiError, apiFetch, parseResponse } from "@/lib/api-client";
+import { apiFetch, parseResponse } from "@/lib/api-client";
+
+const STORIES = SITE_CONFIG.apiBaseUrl + "/api/v1/stories";
+const CATEGORIES = SITE_CONFIG.apiBaseUrl + "/api/v1/categories";
 
 export interface ManagedStory {
   id: number;
@@ -10,6 +13,8 @@ export interface ManagedStory {
   coverImageUrl?: string;
   storyType: StoryType;
   status: string;
+  visible: boolean;
+  categories: Category[];
   authorEmail: string;
   createdAt: string;
   updatedAt: string;
@@ -20,13 +25,27 @@ export interface CreateStoryInput {
   slug: string;
   description?: string;
   storyType: StoryType;
+  visible?: boolean;
+  categoryIds?: number[];
 }
 
 export type UpdateStoryInput = Partial<CreateStoryInput>;
 
+export async function getCategories(): Promise<Category[]> {
+  const response = await apiFetch(CATEGORIES);
+
+  return parseResponse<Category[]>(response);
+}
+
+export async function getMyStories(): Promise<ManagedStory[]> {
+  const response = await apiFetch(STORIES + "/mine");
+
+  return parseResponse<ManagedStory[]>(response);
+}
+
 export async function getStory(storyId: number): Promise<ManagedStory> {
   const response = await apiFetch(
-    SITE_CONFIG.apiBaseUrl + "/api/v1/stories/" + storyId
+    STORIES + "/" + storyId
   );
 
   return parseResponse<ManagedStory>(response);
@@ -36,7 +55,7 @@ export async function createStory(
   input: CreateStoryInput
 ): Promise<ManagedStory> {
   const response = await apiFetch(
-    SITE_CONFIG.apiBaseUrl + "/api/v1/stories",
+    STORIES,
     {
       method: "POST",
       headers: {
@@ -57,7 +76,7 @@ export async function updateStory(
   input: UpdateStoryInput
 ): Promise<ManagedStory> {
   const response = await apiFetch(
-    SITE_CONFIG.apiBaseUrl + "/api/v1/stories/" + storyId,
+    STORIES + "/" + storyId,
     {
       method: "PATCH",
       headers: {
@@ -81,7 +100,7 @@ export async function uploadStoryCover(
   formData.append("file", file);
 
   const response = await apiFetch(
-    SITE_CONFIG.apiBaseUrl + "/api/v1/stories/" + storyId + "/cover",
+    STORIES + "/" + storyId + "/cover",
     {
       method: "POST",
       body: formData,
@@ -92,19 +111,7 @@ export async function uploadStoryCover(
 }
 
 export async function deleteStory(storyId: number): Promise<void> {
-  const response = await apiFetch(
-    SITE_CONFIG.apiBaseUrl + "/api/v1/stories/" + storyId,
-    {
-      method: "DELETE",
-    }
+  await parseResponse<void>(
+    await apiFetch(STORIES + "/" + storyId, { method: "DELETE" })
   );
-
-  if (!response.ok) {
-    const body = await response.json().catch(() => null);
-    throw new ApiError(
-      body?.message ?? "Unable to delete the story",
-      body?.code ?? "API_ERROR",
-      response.status
-    );
-  }
 }

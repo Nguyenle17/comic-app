@@ -4,9 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useRef, useSyncExternalStore } from "react";
 import { useAuthStore } from "@/features/auth/stores/auth-store";
-import { useUIStore } from "@/features/preferences/stores/ui-store";
+import { useUiStore } from "@/features/preferences/stores/ui-store";
 import { useT } from "@/features/preferences/i18n";
 import { logout } from "@/features/auth/api";
+import { isAuthorRole } from "@/types/user";
 
 const NAV = [
   { key: "nav.home", href: "/" },
@@ -31,7 +32,7 @@ export function Header() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const { user, isAuthenticated } = useAuthStore();
-  const { isDarkMode, language, toggleDarkMode, setLanguage } = useUIStore();
+  const { isDarkMode, language, toggleDarkMode, setLanguage } = useUiStore();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -54,6 +55,10 @@ export function Header() {
     setOpenUserDropdown(false);
     setOpenMenu(false);
     await logout();
+    useUiStore.getState().addToast({
+      type: "success",
+      message: t("toast.logoutSuccess"),
+    });
     router.push("/");
     router.refresh();
   }
@@ -211,8 +216,11 @@ export function Header() {
                     <MenuLink href="/tu-truyen" icon="library" label={t("common.library")} onNavigate={() => setOpenUserDropdown(false)} />
                     <MenuLink href="/vi-cua-toi" icon="coin" label={`${t("common.wallet")} (${user.coinBalance ?? 0})`} onNavigate={() => setOpenUserDropdown(false)} />
                     <MenuLink href="/lich-su" icon="history" label={t("common.history")} onNavigate={() => setOpenUserDropdown(false)} />
-                    {user.role === "author" || user.role === "admin" ? (
-                      <MenuLink href="/author/stories/new" icon="create" accent label={t("common.createStory")} onNavigate={() => setOpenUserDropdown(false)} />
+                    {isAuthorRole(user.role) ? (
+                      <>
+                        <MenuLink href="/author/stories" icon="library" label={t("account.manageStories")} onNavigate={() => setOpenUserDropdown(false)} />
+                        <MenuLink href="/author/stories/new" icon="create" accent label={t("common.createStory")} onNavigate={() => setOpenUserDropdown(false)} />
+                      </>
                     ) : (
                       <MenuLink href="/become-author" icon="create" accent label={t("common.becomeAuthor")} onNavigate={() => setOpenUserDropdown(false)} />
                     )}
@@ -294,8 +302,11 @@ export function Header() {
                   <MobileLink href="/account" label={t("common.account")} onNavigate={() => setOpenMenu(false)} />
                   <MobileLink href="/tu-truyen" label={t("common.library")} onNavigate={() => setOpenMenu(false)} />
                   <MobileLink href="/vi-cua-toi" label={t("common.wallet")} onNavigate={() => setOpenMenu(false)} />
-                  {user.role === "author" || user.role === "admin" ? (
-                    <MobileLink href="/author/stories/new" label={t("common.createStory")} onNavigate={() => setOpenMenu(false)} />
+                  {isAuthorRole(user.role) ? (
+                    <>
+                      <MobileLink href="/author/stories" label={t("account.manageStories")} onNavigate={() => setOpenMenu(false)} />
+                      <MobileLink href="/author/stories/new" label={t("common.createStory")} onNavigate={() => setOpenMenu(false)} />
+                    </>
                   ) : (
                     <MobileLink href="/become-author" label={t("common.becomeAuthor")} onNavigate={() => setOpenMenu(false)} />
                   )}

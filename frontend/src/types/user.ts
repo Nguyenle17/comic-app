@@ -12,13 +12,5 @@ export interface User {
   createdAt: string;
 }
 
-export interface PublicUserProfile {
-  id: number;
-  username: string;
-  displayName: string;
-  avatarUrl?: string;
-  bio?: string;
-  storyCount: number;
-  totalViews: number;
-  createdAt: string;
-}
+export const isAuthorRole = (role: UserRole) =>
+  role === 'author' || role === 'admin';
