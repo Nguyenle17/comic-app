@@ -2,6 +2,8 @@ package com.ncomics.backend.modules.story.dto;
 
 import com.ncomics.backend.modules.story.enums.StoryType;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Size;
 
 public record UpdateStoryRequest(
@@ -14,6 +16,10 @@ public record UpdateStoryRequest(
         @Size(max = 5000)
         String description,
 
-        StoryType storyType
+        StoryType storyType,
+
+        Boolean visible,
+
+        List<Long> categoryIds
 ) {
 }

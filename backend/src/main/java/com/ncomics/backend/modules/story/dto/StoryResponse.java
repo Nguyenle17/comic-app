@@ -1,7 +1,10 @@
 package com.ncomics.backend.modules.story.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Locale;
 
+import com.ncomics.backend.modules.category.dto.CategoryResponse;
 import com.ncomics.backend.modules.story.entity.Story;
 
 public record StoryResponse(
@@ -12,6 +15,8 @@ public record StoryResponse(
         String coverImageUrl,
         String storyType,
         String status,
+        boolean visible,
+        List<CategoryResponse> categories,
         String authorEmail,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
@@ -23,9 +28,13 @@ public record StoryResponse(
                 story.getSlug(),
                 story.getDescription(),
                 story.getCoverImageUrl(),
-                story.getStoryType().name().toLowerCase(),
-                story.getStatus().name().toLowerCase(),
-                story.getAuthor(),
+                story.getStoryType().name().toLowerCase(Locale.ROOT),
+                story.getStatus().name().toLowerCase(Locale.ROOT),
+                story.isVisible(),
+                story.getCategories().stream()
+                        .map(CategoryResponse::from)
+                        .toList(),
+                story.getAuthor().getEmail(),
                 story.getCreatedAt(),
                 story.getUpdatedAt()
         );

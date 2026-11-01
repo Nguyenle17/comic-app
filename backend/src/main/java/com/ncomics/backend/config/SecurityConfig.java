@@ -97,7 +97,6 @@ public class SecurityConfig {
                                 "/api/v1/chapters/**",
                                 "/api/v1/chapter-images/**",
                                 "/api/v1/categories/**",
-                                "/api/v1/story-categories/**",
                                 "/uploads/**"
                         ).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")

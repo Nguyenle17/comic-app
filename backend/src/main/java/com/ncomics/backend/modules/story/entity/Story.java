@@ -1,10 +1,13 @@
 package com.ncomics.backend.modules.story.entity;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.ncomics.backend.modules.category.entity.Category;
 import com.ncomics.backend.modules.story.enums.Status;
 import com.ncomics.backend.modules.story.enums.StoryType;
 
@@ -16,6 +19,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
@@ -25,6 +32,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.ncomics.backend.modules.user.entity.User;
+import jakarta.persistence.FetchType;
 
 
 @Entity
@@ -35,7 +44,7 @@ import lombok.Setter;
         },
         indexes = {
                 @Index(name = "idx_stories_status", columnList = "status"),
-                @Index(name = "idx_stories_author", columnList = "author")
+                @Index(name = "idx_stories_author", columnList = "author_id")
         }
 )
 @Getter
@@ -75,9 +84,22 @@ public class Story {
     @Builder.Default
     private Status status = Status.UNCOMPLETED;
 
-    @Size(max = 255)
-    @Column(name = "author")
-    private String author;
+    @Column(name = "visible", nullable = false, columnDefinition = "boolean default true")
+    @Builder.Default
+    private boolean visible = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "story_categories",
+            joinColumns = @JoinColumn(name = "story_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    @Builder.Default
+    private Set<Category> categories = new LinkedHashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
