@@ -1,10 +1,10 @@
-package com.ncomics.backend.modules.story.dto;
+package com.ncomics.backend.modules.story.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
-import com.ncomics.backend.modules.category.dto.CategoryResponse;
+import com.ncomics.backend.modules.category.dto.response.CategoryResponse;
 import com.ncomics.backend.modules.story.entity.Story;
 
 public record StoryResponse(

@@ -1,4 +1,4 @@
-package com.ncomics.backend.modules.category.dto;
+package com.ncomics.backend.modules.category.dto.response;
 
 import com.ncomics.backend.modules.category.entity.Category;
 

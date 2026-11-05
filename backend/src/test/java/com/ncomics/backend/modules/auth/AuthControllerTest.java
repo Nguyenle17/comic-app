@@ -13,10 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import com.ncomics.backend.modules.auth.dto.AuthResponse;
+import com.ncomics.backend.modules.auth.dto.response.AuthResponse;
 import com.ncomics.backend.modules.auth.dto.AuthResult;
-import com.ncomics.backend.modules.auth.dto.LoginRequest;
-import com.ncomics.backend.modules.auth.dto.UserResponse;
+import com.ncomics.backend.modules.auth.dto.request.LoginRequest;
+import com.ncomics.backend.modules.auth.dto.response.UserResponse;
 
 class AuthControllerTest {
 

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ncomics.backend.modules.auth.dto.AuthResponse;
+import com.ncomics.backend.modules.auth.dto.response.AuthResponse;
 import com.ncomics.backend.modules.auth.dto.AuthResult;
-import com.ncomics.backend.modules.auth.dto.LoginRequest;
-import com.ncomics.backend.modules.auth.dto.RegisterRequest;
+import com.ncomics.backend.modules.auth.dto.request.LoginRequest;
+import com.ncomics.backend.modules.auth.dto.request.RegisterRequest;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

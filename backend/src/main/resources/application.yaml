@@ -31,3 +31,13 @@ app:
 
 upload:
   dir: ./uploads
+
+logging:
+  level:
+    root: INFO
+    com.ncomics.backend: DEBUG
+    org.springframework.web: WARN
+    org.hibernate: WARN
+
+  file:
+    name: ./logs/application.log

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ncomics.backend.modules.category.dto.CategoryResponse;
+import com.ncomics.backend.modules.category.dto.response.CategoryResponse;
 
 @RestController
 @RequestMapping("/api/v1/categories")

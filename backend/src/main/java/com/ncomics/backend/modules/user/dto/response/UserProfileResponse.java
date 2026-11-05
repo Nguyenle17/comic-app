@@ -1,4 +1,4 @@
-package com.ncomics.backend.modules.user.dto;
+package com.ncomics.backend.modules.user.dto.response;
 
 import java.time.LocalDateTime;
 

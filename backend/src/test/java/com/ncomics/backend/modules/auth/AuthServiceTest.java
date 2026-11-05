@@ -28,10 +28,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ncomics.backend.common.exception.DuplicateResourceException;
 import com.ncomics.backend.common.exception.InvalidTokenException;
-import com.ncomics.backend.modules.auth.dto.AuthResponse;
+import com.ncomics.backend.modules.auth.dto.response.AuthResponse;
 import com.ncomics.backend.modules.auth.dto.AuthResult;
-import com.ncomics.backend.modules.auth.dto.LoginRequest;
-import com.ncomics.backend.modules.auth.dto.RegisterRequest;
+import com.ncomics.backend.modules.auth.dto.request.LoginRequest;
+import com.ncomics.backend.modules.auth.dto.request.RegisterRequest;
 import com.ncomics.backend.modules.auth.entity.RefreshToken;
 import com.ncomics.backend.modules.auth.security.JwtService;
 import com.ncomics.backend.modules.user.UserRepository;

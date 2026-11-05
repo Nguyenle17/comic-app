@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ncomics.backend.modules.auth.implement.CustomUserDetails;
-import com.ncomics.backend.modules.user.dto.UserProfileResponse;
+import com.ncomics.backend.modules.user.dto.response.UserProfileResponse;
 
 import lombok.RequiredArgsConstructor;
 

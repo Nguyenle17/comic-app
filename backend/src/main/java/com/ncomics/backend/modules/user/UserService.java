@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.ncomics.backend.modules.user.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ncomics.backend.modules.user.dto.UserProfileResponse;
+import com.ncomics.backend.modules.user.dto.response.UserProfileResponse;
 import com.ncomics.backend.modules.user.enums.Role;
 
 import lombok.RequiredArgsConstructor;

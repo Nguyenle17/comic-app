@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ncomics.backend.modules.auth.implement.CustomUserDetails;
-import com.ncomics.backend.modules.story.dto.CreateStoryRequest;
-import com.ncomics.backend.modules.story.dto.StoryResponse;
-import com.ncomics.backend.modules.story.dto.UpdateStoryRequest;
+import com.ncomics.backend.modules.story.dto.request.CreateStoryRequest;
+import com.ncomics.backend.modules.story.dto.response.StoryResponse;
+import com.ncomics.backend.modules.story.dto.request.UpdateStoryRequest;
 
 import jakarta.validation.Valid;
 

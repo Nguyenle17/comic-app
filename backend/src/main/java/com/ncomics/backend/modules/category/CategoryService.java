@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ncomics.backend.modules.category.dto.CategoryResponse;
+import com.ncomics.backend.modules.category.dto.response.CategoryResponse;
 
 @Service
 public class CategoryService {

@@ -18,14 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ncomics.backend.common.exception.DuplicateResourceException;
 import com.ncomics.backend.modules.category.CategoryRepository;
 import com.ncomics.backend.modules.category.entity.Category;
-import com.ncomics.backend.modules.story.dto.CreateStoryRequest;
-import com.ncomics.backend.modules.story.dto.StoryResponse;
-import com.ncomics.backend.modules.story.dto.UpdateStoryRequest;
+import com.ncomics.backend.modules.story.dto.request.CreateStoryRequest;
+import com.ncomics.backend.modules.story.dto.response.StoryResponse;
+import com.ncomics.backend.modules.story.dto.request.UpdateStoryRequest;
 import com.ncomics.backend.modules.story.entity.Story;
 import com.ncomics.backend.modules.story.enums.Status;
 import com.ncomics.backend.modules.user.entity.User;
 import com.ncomics.backend.modules.user.enums.Role;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class StoryService {
 
@@ -146,17 +149,23 @@ public class StoryService {
         Files.createDirectories(filePath.getParent());
         file.transferTo(filePath.toAbsolutePath());
 
+        String previousCoverUrl = story.getCoverImageUrl();
         story.setCoverImageUrl("/uploads/" + fileName);
-        return StoryResponse.from(storyRepository.save(story));
+        Story saved = storyRepository.saveAndFlush(story);
+        deleteCoverImage(previousCoverUrl);
+
+        return StoryResponse.from(saved);
     }
 
     @Transactional
     public void deleteStory(User user, Long storyId) {
         Story story = findOwnedStory(user, storyId);
-
-        deleteCoverImage(story.getCoverImageUrl());
+        String coverImageUrl = story.getCoverImageUrl();
 
         storyRepository.delete(story);
+        storyRepository.flush();
+
+        deleteCoverImage(coverImageUrl);
     }
 
     private void deleteCoverImage(String coverImageUrl) {
@@ -165,19 +174,24 @@ public class StoryService {
         }
 
         String filename = coverImageUrl.substring(
-            coverImageUrl.lastIndexOf("/") + 1
+                coverImageUrl.lastIndexOf("/") + 1
         );
+        if (filename.isBlank()) {
+            return;
+        }
 
-        Path filePath = Path.of(uploadDir)
-                .resolve(filename)
-                .normalize();
+        Path root = Path.of(uploadDir).toAbsolutePath().normalize();
+        Path filePath = root.resolve(filename).normalize();
+
+        if (!filePath.startsWith(root)) {
+            log.warn("Skipping cover deletion outside upload dir: {}", coverImageUrl);
+            return;
+        }
 
         try {
             Files.deleteIfExists(filePath);
         } catch (IOException e) {
-            throw new IllegalStateException(
-                "Failed to delete cover image", e
-            );
+            log.warn("Failed to delete cover image {}", filePath, e);
         }
     }
 
