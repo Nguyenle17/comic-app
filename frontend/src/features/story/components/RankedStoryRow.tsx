@@ -24,9 +24,9 @@ export function RankedStoryRow({
   return (
     <Link
       href={`/truyen/${story.slug}`}
-      className="group grid grid-cols-[2rem_3rem_1fr] items-center gap-3 border-b border-line py-3 sm:grid-cols-[2.5rem_3.5rem_1fr_auto] sm:gap-4"
+      className="group -mx-2 grid grid-cols-[2rem_3rem_1fr] items-center gap-3 border-b border-line px-2 py-3 transition-colors hover:bg-surface sm:grid-cols-[2.5rem_3.5rem_1fr_auto] sm:gap-4"
     >
-      <span className="font-serif text-2xl font-medium text-line-strong transition-colors group-hover:text-accent sm:text-3xl">
+      <span className="font-serif text-2xl font-medium tabular-nums text-muted transition-colors group-hover:text-accent sm:text-3xl">
         {String(rank).padStart(2, "0")}
       </span>
 
@@ -41,7 +41,7 @@ export function RankedStoryRow({
       </div>
 
       <div className="min-w-0">
-        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted">
+        <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted">
           {t(typeLabelKey[story.storyType])} · {story.chapterCount}{" "}
           {t("common.chapters")}
         </p>
@@ -52,8 +52,8 @@ export function RankedStoryRow({
       </div>
 
       <div className="hidden text-right sm:block">
-        <p className="font-serif text-sm text-ink">{formatNumber(story.viewCount)}</p>
-        <p className="text-[10px] uppercase tracking-[0.12em] text-muted">
+        <p className="font-serif text-sm tabular-nums text-ink">{formatNumber(story.viewCount)}</p>
+        <p className="text-[11px] uppercase tracking-[0.12em] text-muted">
           {t("common.views")}
         </p>
       </div>

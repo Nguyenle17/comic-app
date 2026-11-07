@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Button, buttonStyles } from "@/components/ui/Button";
 import { useAuthStore } from "@/features/auth/stores/auth-store";
 import { useT } from "@/features/preferences/i18n";
 import { useBecomeAuthor } from "@/features/user/hooks/useBecomeAuthor";
@@ -14,16 +15,16 @@ export default function AccountPage() {
   if (!user) {
     return (
       <main className="mx-auto w-full max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
-        <p className="rule-label">NStories</p>
-        <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        <p className="rule-label">NNovels</p>
+        <h1 className="mt-4 text-balance font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
           {t("account.signedOutTitle")}
         </h1>
-        <p className="mt-4 max-w-md text-sm leading-7 text-ink-soft">
+        <p className="mt-4 max-w-md text-pretty text-sm leading-7 text-ink-soft">
           {t("account.subtitle")}
         </p>
         <Link
           href="/auth/login"
-          className="mt-8 inline-flex h-11 items-center rounded-sm bg-accent px-6 text-sm font-semibold text-surface transition-colors hover:bg-accent-strong"
+          className={buttonStyles({ variant: "accent", className: "mt-8 h-11" })}
         >
           {t("common.signIn")}
         </Link>
@@ -37,10 +38,10 @@ export default function AccountPage() {
     <main className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <header className="max-w-2xl">
         <p className="rule-label">{t("common.account")}</p>
-        <h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+        <h1 className="mt-3 text-balance font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
           {t("account.myAccount")}
         </h1>
-        <p className="mt-3 text-sm leading-7 text-ink-soft">{t("account.subtitle")}</p>
+        <p className="mt-3 text-pretty text-sm leading-7 text-ink-soft">{t("account.subtitle")}</p>
       </header>
 
       <div className="mt-10 grid gap-10 border-t border-line pt-8 lg:grid-cols-[260px_1fr] lg:gap-16">
@@ -113,14 +114,15 @@ export default function AccountPage() {
                 <p className="max-w-lg text-sm leading-7 text-ink-soft">
                   {t("becomeAuthor.desc")}
                 </p>
-                <button
+                <Button
                   type="button"
+                  variant="accent"
+                  isLoading={isSubmitting}
                   onClick={() => void onSubmit()}
-                  disabled={isSubmitting}
-                  className="mt-5 inline-flex h-11 items-center rounded-sm bg-accent px-6 text-sm font-semibold text-surface transition-colors hover:bg-accent-strong disabled:opacity-50"
+                  className="mt-5 h-11"
                 >
                   {isSubmitting ? t("common.updating") : t("common.becomeAuthor")}
-                </button>
+                </Button>
               </div>
             )}
           </section>

@@ -49,10 +49,11 @@ export function LoginForm() {
           placeholder="you@example.com"
           className={cn("field", errors.email && "border-accent")}
           aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "login-email-error" : undefined}
           {...register("email")}
         />
         {errors.email && (
-          <p className="mt-1.5 text-[11px] text-accent">
+          <p id="login-email-error" className="mt-1.5 text-[11px] text-accent">
             {t(errors.email.message ?? "")}
           </p>
         )}
@@ -78,19 +79,20 @@ export function LoginForm() {
             placeholder="••••••••"
             className={cn("field pr-11", errors.password && "border-accent")}
             aria-invalid={!!errors.password}
+            aria-describedby={errors.password ? "login-password-error" : undefined}
             {...register("password")}
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-ink"
+            className="absolute right-0 top-0 grid h-11 w-11 place-items-center text-muted transition-colors hover:text-ink"
             aria-label={showPassword ? t("auth.hidePassword") : t("auth.showPassword")}
           >
             {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
           </button>
         </div>
         {errors.password && (
-          <p className="mt-1.5 text-[11px] text-accent">
+          <p id="login-password-error" className="mt-1.5 text-[11px] text-accent">
             {t(errors.password.message ?? "")}
           </p>
         )}
@@ -107,7 +109,7 @@ export function LoginForm() {
 
       <Button
         type="submit"
-        variant="amber"
+        variant="accent"
         size="lg"
         isLoading={isSubmitting}
         className="w-full"
@@ -117,7 +119,7 @@ export function LoginForm() {
 
       <div className="flex items-center gap-3 pt-1">
         <span className="h-px flex-1 bg-line" />
-        <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-muted">
+        <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted">
           {t("auth.orContinue")}
         </span>
         <span className="h-px flex-1 bg-line" />
@@ -138,7 +140,7 @@ function SocialButton({ provider }: { provider: "google" | "facebook" }) {
     <button
       type="button"
       onClick={() => alert(t("auth.socialAlert"))}
-      className="inline-flex h-10 items-center justify-center gap-2 rounded-sm border border-line bg-surface text-xs font-medium text-ink-soft transition-colors hover:border-line-strong hover:text-ink"
+      className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-line bg-surface text-xs font-medium text-ink-soft transition-colors hover:border-line-strong hover:text-ink"
     >
       {isGoogle ? (
         <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">

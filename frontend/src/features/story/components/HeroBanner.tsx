@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
+import { buttonStyles } from "@/components/ui/Button";
 import { formatNumber } from "@/lib/utils";
 import { useT } from "@/features/preferences/i18n";
 import type { Story } from "@/features/story/types/story";
@@ -32,7 +33,7 @@ export function HeroBanner({ story }: { story: Story }) {
 
           <Link
             href={`/truyen/${story.slug}`}
-            className="mt-5 block font-serif text-4xl font-semibold leading-[1.08] tracking-tight text-ink transition-colors hover:text-accent sm:text-5xl lg:text-6xl"
+            className="mt-5 block text-balance font-serif text-4xl font-semibold leading-[1.08] tracking-tight text-ink transition-colors hover:text-accent sm:text-5xl lg:text-6xl"
           >
             {story.title}
           </Link>
@@ -48,26 +49,26 @@ export function HeroBanner({ story }: { story: Story }) {
             ) : null}
           </p>
 
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-ink-soft">
+          <p className="mt-5 max-w-2xl text-pretty text-sm leading-7 text-ink-soft">
             {story.description}
           </p>
 
           <dl className="mt-7 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-5">
             <div>
               <dt className="rule-label">{t("common.views")}</dt>
-              <dd className="mt-1 font-serif text-lg text-ink">
+              <dd className="mt-1 font-serif text-lg tabular-nums text-ink">
                 {formatNumber(story.viewCount)}
               </dd>
             </div>
             <div>
               <dt className="rule-label">{t("common.chapters")}</dt>
-              <dd className="mt-1 font-serif text-lg text-ink">
+              <dd className="mt-1 font-serif text-lg tabular-nums text-ink">
                 {story.chapterCount}
               </dd>
             </div>
             <div>
               <dt className="rule-label">{t("common.ratings")}</dt>
-              <dd className="mt-1 font-serif text-lg text-ink">
+              <dd className="mt-1 font-serif text-lg tabular-nums text-ink">
                 {story.ratingAvg.toFixed(1)}
                 <span className="ml-1 font-sans text-xs text-muted">
                   ({formatNumber(story.ratingCount)})
@@ -79,7 +80,7 @@ export function HeroBanner({ story }: { story: Story }) {
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <Link
               href={`/truyen/${story.slug}/chuong-1`}
-              className="inline-flex h-11 items-center gap-2 rounded-sm border border-accent bg-accent px-6 text-sm font-semibold text-surface transition-colors hover:border-accent-strong hover:bg-accent-strong"
+              className={buttonStyles({ variant: "accent", className: "h-11 gap-2" })}
             >
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path d="M6.5 4.5a1 1 0 011.54-.84l8 5.5a1 1 0 010 1.68l-8 5.5A1 1 0 016.5 15.5v-11z" />

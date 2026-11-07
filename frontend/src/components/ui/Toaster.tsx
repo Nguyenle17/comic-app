@@ -27,12 +27,18 @@ export function Toaster() {
           type="button"
           onClick={() => removeToast(toast.id)}
           className={cn(
-            "pointer-events-auto flex w-full items-start gap-2.5 rounded-sm border px-4 py-3 text-left text-xs font-medium shadow-lg shadow-black/10",
+            "pointer-events-auto flex w-full items-start gap-2.5 rounded-sm border px-4 py-3 text-left text-xs font-medium shadow-lg shadow-black/10 transition-opacity hover:opacity-90",
             styles[toast.type]
           )}
         >
           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-current" />
-          <span className="flex-1 leading-5">{toast.message}</span>
+          <span
+            role={toast.type === "error" ? "alert" : "status"}
+            aria-atomic="true"
+            className="flex-1 leading-5"
+          >
+            {toast.message}
+          </span>
           <span aria-hidden="true" className="text-sm leading-4 opacity-60">
             ×
           </span>

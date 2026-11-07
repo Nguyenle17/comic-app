@@ -8,6 +8,7 @@ const vi = {
   "nav.categories": "Thể loại",
   "nav.rankings": "Bảng xếp hạng",
   "nav.originals": "Sáng tác",
+  "nav.menu": "Điều hướng chính",
   "nav.search": "Tìm truyện, tác giả, thể loại...",
   "common.account": "Tài khoản",
   "common.library": "Tủ truyện",
@@ -37,7 +38,7 @@ const vi = {
 
   "footer.tagline":
     "Một không gian hiện đại để đọc, khám phá và sáng tạo truyện. Cập nhật tác phẩm mới và kết nối với tác giả mỗi ngày.",
-  "footer.rights": "© {year} NStories. Bảo lưu mọi quyền.",
+  "footer.rights": "© {year} NNovels. Bảo lưu mọi quyền.",
   "footer.explore": "Khám phá",
   "footer.creator": "Cộng đồng tác giả",
   "footer.info": "Thông tin & hỗ trợ",
@@ -53,7 +54,7 @@ const vi = {
   "footer.copyright": "Bản quyền nội dung",
   "footer.contact": "Liên hệ & góp ý",
   "footer.disclaimer":
-    "NStories là nền tảng đọc mở dành cho độc giả và tác giả. Nội dung cộng đồng được chia sẻ theo quy định về nội dung và bản quyền của chúng tôi.",
+    "NNovels là nền tảng đọc mở dành cho độc giả và tác giả. Nội dung cộng đồng được chia sẻ theo quy định về nội dung và bản quyền của chúng tôi.",
 
   "home.all": "Tất cả",
   "home.textStories": "Truyện chữ",
@@ -73,7 +74,7 @@ const vi = {
   "home.ctaBadge": "Dành cho người sáng tác",
   "home.ctaTitle": "Sáng tác câu chuyện của bạn, nhận xu từ hàng vạn độc giả",
   "home.ctaDesc":
-    "NStories cung cấp nền tảng đăng truyện miễn phí với trình soạn thảo hiện đại, thống kê lượt đọc và hỗ trợ trực tiếp từ độc giả.",
+    "NNovels cung cấp nền tảng đăng truyện miễn phí với trình soạn thảo hiện đại, thống kê lượt đọc và hỗ trợ trực tiếp từ độc giả.",
   "home.ctaStart": "Bắt đầu sáng tác ngay",
   "home.ctaLearn": "Tìm hiểu chính sách",
   "home.ctaStepWrite": "Viết và hoàn thiện bản thảo trong trình soạn thảo",
@@ -93,7 +94,7 @@ const vi = {
   "section.viewAll": "Xem tất cả",
 
   "auth.home": "Trang chủ",
-  "auth.asideKicker": "Phòng đọc NStories",
+  "auth.asideKicker": "Phòng đọc NNovels",
   "auth.asideTitle": "Đọc chậm. Viết sâu.",
   "auth.asideDesc":
     "Một không gian yên tĩnh để theo dõi truyện, lưu tủ truyện và bắt đầu sáng tác của riêng bạn.",
@@ -106,7 +107,7 @@ const vi = {
   "auth.loginSubtitle":
     "Đăng nhập để tiếp tục khám phá hàng nghìn bộ truyện hấp dẫn.",
   "auth.loginFooter":
-    "Khi đăng nhập, bạn đồng ý với điều khoản và chính sách của NStories.",
+    "Khi đăng nhập, bạn đồng ý với điều khoản và chính sách của NNovels.",
   "auth.registerTitle": "Tạo tài khoản mới",
   "auth.registerSubtitle":
     "Đăng ký tài khoản miễn phí, nhận ngay 100 xu để đọc truyện.",
@@ -164,6 +165,8 @@ const vi = {
   "becomeAuthor.title": "Trở thành tác giả",
   "becomeAuthor.desc":
     "Trở thành tác giả để đăng truyện, tải ảnh bìa và quản lý nội dung của riêng bạn.",
+  "becomeAuthor.ctaNote":
+    "Tài khoản của bạn sẽ được nâng cấp thành tác giả ngay sau khi xác nhận.",
 
   "stories.newTitle": "Đăng truyện mới",
   "stories.newSubtitle": "Thêm thông tin truyện và tải lên ảnh bìa.",
@@ -227,6 +230,7 @@ const en: Record<keyof typeof vi, string> = {
   "nav.categories": "Categories",
   "nav.rankings": "Rankings",
   "nav.originals": "Originals",
+  "nav.menu": "Main navigation",
   "nav.search": "Search stories, authors, categories...",
   "common.account": "My account",
   "common.library": "My library",
@@ -256,7 +260,7 @@ const en: Record<keyof typeof vi, string> = {
 
   "footer.tagline":
     "A modern home for reading, discovering, and creating stories. Explore new releases and connect with authors every day.",
-  "footer.rights": "© {year} NStories. All rights reserved.",
+  "footer.rights": "© {year} NNovels. All rights reserved.",
   "footer.explore": "Explore",
   "footer.creator": "Creator community",
   "footer.info": "Info & support",
@@ -272,7 +276,7 @@ const en: Record<keyof typeof vi, string> = {
   "footer.copyright": "Content copyright",
   "footer.contact": "Contact & feedback",
   "footer.disclaimer":
-    "NStories is an open reading platform for readers and creators. Community contributions are shared under our content and copyright guidelines.",
+    "NNovels is an open reading platform for readers and creators. Community contributions are shared under our content and copyright guidelines.",
 
   "home.all": "All",
   "home.textStories": "Text stories",
@@ -292,7 +296,7 @@ const en: Record<keyof typeof vi, string> = {
   "home.ctaBadge": "For creators",
   "home.ctaTitle": "Write your story, earn coins from thousands of readers",
   "home.ctaDesc":
-    "NStories offers a free publishing platform with a modern editor, reading analytics, and direct reader support.",
+    "NNovels offers a free publishing platform with a modern editor, reading analytics, and direct reader support.",
   "home.ctaStart": "Start writing now",
   "home.ctaLearn": "Learn about our policies",
   "home.ctaStepWrite": "Write and refine your manuscript in the editor",
@@ -312,7 +316,7 @@ const en: Record<keyof typeof vi, string> = {
   "section.viewAll": "View all",
 
   "auth.home": "Home",
-  "auth.asideKicker": "The NStories reading room",
+  "auth.asideKicker": "The NNovels reading room",
   "auth.asideTitle": "Read slowly. Write deeply.",
   "auth.asideDesc":
     "A quiet place to follow stories, keep a personal shelf, and start writing your own.",
@@ -325,7 +329,7 @@ const en: Record<keyof typeof vi, string> = {
   "auth.loginSubtitle":
     "Sign in to keep exploring thousands of captivating stories.",
   "auth.loginFooter":
-    "By signing in, you agree to the NStories terms and policies.",
+    "By signing in, you agree to the NNovels terms and policies.",
   "auth.registerTitle": "Create an account",
   "auth.registerSubtitle":
     "Sign up for free and get 100 coins to start reading.",
@@ -383,6 +387,8 @@ const en: Record<keyof typeof vi, string> = {
   "becomeAuthor.title": "Become an author",
   "becomeAuthor.desc":
     "Become an author to create stories, upload cover images, and manage your own content.",
+  "becomeAuthor.ctaNote":
+    "Your account will be upgraded to an author account after you confirm.",
 
   "stories.newTitle": "Create a story",
   "stories.newSubtitle": "Add story details and upload a cover image.",

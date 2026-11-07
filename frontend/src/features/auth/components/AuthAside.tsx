@@ -15,10 +15,10 @@ export function AuthAside() {
     <aside className="hidden flex-col justify-between border-r border-line py-12 pl-2 pr-12 lg:flex">
       <div>
         <p className="rule-label">{t("auth.asideKicker")}</p>
-        <h2 className="mt-6 font-serif text-5xl font-semibold leading-[1.1] tracking-tight text-ink">
+        <h2 className="mt-6 text-balance font-serif text-5xl font-semibold leading-[1.1] tracking-tight text-ink">
           {t("auth.asideTitle")}
         </h2>
-        <p className="mt-6 max-w-sm text-sm leading-7 text-ink-soft">
+        <p className="mt-6 max-w-sm text-pretty text-sm leading-7 text-ink-soft">
           {t("auth.asideDesc")}
         </p>
       </div>

@@ -36,7 +36,7 @@ export function AuthCard({ title, subtitle, children, footer }: AuthCardProps) {
       </Link>
 
       <div className="mt-8">
-        <h1 className="font-serif text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        <h1 className="text-balance font-serif text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
           {title}
         </h1>
         {subtitle && (

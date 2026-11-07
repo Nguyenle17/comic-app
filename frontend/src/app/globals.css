@@ -8,7 +8,7 @@
   --color-surface: #fffdf8;
   --color-ink: #1d1a16;
   --color-ink-soft: #5f584e;
-  --color-muted: #8c8377;
+  --color-muted: #6f675b;
   --color-line: #ddd5c8;
   --color-line-strong: #c6bba9;
   --color-accent: #b23a2b;
@@ -32,7 +32,7 @@
     --color-surface: #1c1916;
     --color-ink: #f1ece2;
     --color-ink-soft: #b9b0a3;
-    --color-muted: #8d8478;
+    --color-muted: #9a9184;
     --color-line: #322d27;
     --color-line-strong: #4a4239;
     --color-accent: #dd6a52;
@@ -54,13 +54,22 @@
 }
 
 @layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .rule-label {
     @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-muted;
   }
   .field {
-    @apply h-11 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink placeholder:text-muted transition-colors focus:border-accent focus:outline-none;
+    @apply h-11 w-full rounded-sm border border-line bg-surface px-3 text-sm text-ink placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20;
+  }
+  .field[aria-invalid="true"] {
+    @apply border-accent;
+  }
+  .chip {
+    @apply inline-flex h-9 shrink-0 items-center border border-line bg-surface px-3 text-xs font-medium text-ink-soft transition-colors hover:border-line-strong hover:text-ink;
   }
   .prose-link {
     @apply underline decoration-line-strong decoration-1 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent;

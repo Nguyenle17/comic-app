@@ -12,6 +12,7 @@ import {
 } from "@/features/story/api";
 import type { Category } from "@/features/story/types/story";
 import { ApiError } from "@/lib/api-client";
+import { Button } from "@/components/ui/Button";
 import { useT } from "@/features/preferences/i18n";
 import { useUiStore } from "@/features/preferences/stores/ui-store";
 
@@ -170,12 +171,13 @@ export function StoryEditor({
           <input
             id="story-slug"
             required
+            aria-describedby="story-slug-hint"
             value={slug}
             onChange={(event) => setSlug(event.target.value)}
             placeholder={t("editor.slugPlaceholder")}
             className="field font-mono text-xs"
           />
-          <p className="mt-1.5 text-[11px] text-muted">{t("editor.slugHint")}</p>
+          <p id="story-slug-hint" className="mt-1.5 text-[11px] text-muted">{t("editor.slugHint")}</p>
         </div>
 
         <div>
@@ -206,17 +208,16 @@ export function StoryEditor({
           ) : (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {categories.map((category) => (
-                <label
-                  key={category.id}
-                  className="flex cursor-pointer items-center gap-2 text-xs text-ink-soft"
-                >
+                <label key={category.id} className="cursor-pointer">
                   <input
                     type="checkbox"
                     checked={categoryIds.includes(category.id)}
                     onChange={() => toggleCategory(category.id)}
-                    className="accent-accent"
+                    className="peer sr-only"
                   />
-                  {category.name}
+                  <span className="flex min-h-11 items-center border border-line bg-surface px-3 text-xs font-medium text-ink-soft transition-colors hover:border-line-strong peer-checked:border-accent peer-checked:bg-accent-soft peer-checked:text-accent-strong peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
+                    {category.name}
+                  </span>
                 </label>
               ))}
             </div>
@@ -224,7 +225,7 @@ export function StoryEditor({
         </fieldset>
       </div>
 
-      <aside className="space-y-6 border-t border-line pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+      <aside className="space-y-6 border-t border-line pt-6 lg:sticky lg:top-24 lg:self-start lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
         <div>
           <label htmlFor="story-type" className="mb-1.5 block text-xs font-medium text-ink-soft">
             {t("editor.type")}
@@ -276,27 +277,31 @@ export function StoryEditor({
         </div>
 
         <div className="space-y-2 border-t border-line pt-5">
-          <button
+          <Button
             type="submit"
-            disabled={isSaving}
-            className="inline-flex h-11 w-full items-center justify-center rounded-sm bg-accent px-5 text-sm font-semibold text-surface transition-colors hover:bg-accent-strong disabled:opacity-50"
+            variant="accent"
+            size="lg"
+            isLoading={isSaving}
+            className="w-full"
           >
             {isSaving
               ? t("editor.saving")
               : storyId
                 ? t("editor.update")
                 : t("editor.create")}
-          </button>
+          </Button>
 
           {storyId && (
-            <button
+            <Button
               type="button"
-              onClick={() => void handleDelete()}
+              variant="danger"
+              size="lg"
               disabled={isSaving}
-              className="inline-flex h-11 w-full items-center justify-center rounded-sm border border-accent px-5 text-sm font-medium text-accent transition-colors hover:bg-accent-soft disabled:opacity-50"
+              onClick={() => void handleDelete()}
+              className="w-full"
             >
               {t("editor.delete")}
-            </button>
+            </Button>
           )}
         </div>
       </aside>

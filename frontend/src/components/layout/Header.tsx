@@ -7,13 +7,14 @@ import { useAuthStore } from "@/features/auth/stores/auth-store";
 import { useUiStore } from "@/features/preferences/stores/ui-store";
 import { useT } from "@/features/preferences/i18n";
 import { logout } from "@/features/auth/api";
+import { buttonStyles } from "@/components/ui/Button";
 import { isAuthorRole } from "@/types/user";
 
 const NAV = [
   { key: "nav.home", href: "/" },
-  { key: "nav.categories", href: "/categories" },
-  { key: "nav.rankings", href: "/rankings" },
-  { key: "nav.originals", href: "/stories?type=original" },
+  { key: "nav.categories", href: "/the-loai" },
+  { key: "nav.rankings", href: "/bxh" },
+  { key: "nav.originals", href: "/danh-sach?loai=original" },
 ] as const;
 
 export function Header() {
@@ -36,6 +37,7 @@ export function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
     const handleClickOutside = (e: MouseEvent) => {
@@ -43,11 +45,20 @@ export function Header() {
         setOpenUserDropdown(false);
       }
     };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenMenu(false);
+        setOpenUserDropdown(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -78,7 +89,7 @@ export function Header() {
           onClick={mobile ? () => setOpenMenu(false) : undefined}
           className={
             mobile
-              ? `border-b border-line py-3 text-sm font-medium ${
+              ? `flex min-h-11 items-center border-b border-line text-sm font-medium ${
                   active ? "text-accent" : "text-ink-soft"
                 }`
               : `relative py-1 text-sm font-medium transition-colors ${
@@ -101,34 +112,36 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full border-b bg-paper/95 transition-colors ${
-        scrolled ? "border-line" : "border-transparent"
+      className={`sticky top-0 z-40 w-full border-b bg-paper/90 backdrop-blur-md transition-colors ${
+        scrolled ? "border-line shadow-sm shadow-black/[0.03]" : "border-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-8">
+      <div className="shell flex h-16 items-center justify-between gap-4">
+        <div className="flex min-w-0 items-center gap-6">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center bg-accent font-serif text-base font-semibold text-surface">
               N
             </span>
             <span className="font-serif text-xl font-semibold tracking-tight text-ink">
-              NStories
+              NNovels
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 md:flex">{navLinks()}</nav>
+          <nav aria-label={t("nav.menu")} className="hidden items-center gap-6 lg:flex">
+            {navLinks()}
+          </nav>
         </div>
 
-        <div className="hidden max-w-xs flex-1 md:block">
+        <div className="hidden max-w-xs flex-1 xl:block">
           <SearchInput placeholder={t("nav.search")} />
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {mounted && (
             <button
               type="button"
               onClick={() => setLanguage(language === "vi" ? "en" : "vi")}
-              className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft transition-colors hover:text-accent"
+              className="inline-flex h-11 min-w-11 items-center justify-center px-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-soft transition-colors hover:text-accent lg:h-9 lg:min-w-9"
               aria-label={t("lang.toggle")}
             >
               {language === "vi" ? "EN" : "VI"}
@@ -139,7 +152,7 @@ export function Header() {
             <button
               type="button"
               onClick={toggleDarkMode}
-              className="grid h-9 w-9 place-items-center rounded-sm border border-line text-ink-soft transition-colors hover:border-line-strong hover:text-ink"
+              className="grid h-11 w-11 place-items-center rounded-sm border border-line text-ink-soft transition-colors hover:border-line-strong hover:text-ink lg:h-9 lg:w-9"
               aria-label={isDarkMode ? t("theme.toLight") : t("theme.toDark")}
             >
               {isDarkMode ? (
@@ -158,7 +171,7 @@ export function Header() {
             <div className="relative flex items-center gap-3" ref={dropdownRef}>
               <Link
                 href="/vi-cua-toi"
-                className="hidden items-center gap-1.5 text-xs font-medium text-ink-soft transition-colors hover:text-accent sm:inline-flex"
+                className="hidden items-center gap-1.5 text-xs font-medium text-ink-soft transition-colors hover:text-accent lg:inline-flex"
               >
                 <CoinIcon className="h-3.5 w-3.5" />
                 <span>
@@ -172,6 +185,7 @@ export function Header() {
                 className="flex items-center gap-2 rounded-sm border border-line px-1.5 py-1 transition-colors hover:border-line-strong"
                 aria-expanded={openUserDropdown}
                 aria-haspopup="menu"
+                aria-controls="user-menu"
               >
                 {user.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -203,8 +217,9 @@ export function Header() {
 
               {openUserDropdown && (
                 <div
+                  id="user-menu"
                   role="menu"
-                  className="absolute right-0 top-11 z-50 w-60 rounded-sm border border-line bg-surface p-2 shadow-lg shadow-black/5"
+                  className="absolute right-0 top-12 z-50 w-60 rounded-sm border border-line bg-surface p-2 shadow-xl shadow-black/10"
                 >
                   <div className="border-b border-line px-3 py-2.5">
                     <p className="text-xs font-semibold text-ink">{user.displayName}</p>
@@ -230,7 +245,7 @@ export function Header() {
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="flex w-full items-center gap-2.5 rounded-sm px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-accent-soft"
+                      className="flex min-h-11 w-full items-center gap-2.5 rounded-sm px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-accent-soft"
                     >
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -242,7 +257,7 @@ export function Header() {
               )}
             </div>
           ) : (
-            <div className="hidden items-center gap-4 sm:flex">
+            <div className="hidden items-center gap-4 lg:flex">
               <Link
                 href="/auth/login"
                 className="text-xs font-medium text-ink-soft transition-colors hover:text-ink"
@@ -251,7 +266,7 @@ export function Header() {
               </Link>
               <Link
                 href="/auth/register"
-                className="rounded-sm bg-accent px-3.5 py-2 text-xs font-semibold text-surface transition-colors hover:bg-accent-strong"
+                className={buttonStyles({ variant: "accent", size: "sm", className: "px-3.5" })}
               >
                 {t("common.signUp")}
               </Link>
@@ -261,9 +276,10 @@ export function Header() {
           <button
             type="button"
             onClick={() => setOpenMenu(!openMenu)}
-            aria-label="Menu"
+            aria-label={t("nav.menu")}
             aria-expanded={openMenu}
-            className="grid h-9 w-9 place-items-center rounded-sm border border-line text-ink transition-colors hover:border-line-strong md:hidden"
+            aria-controls="mobile-menu"
+            className="grid h-11 w-11 place-items-center rounded-sm border border-line text-ink transition-colors hover:border-line-strong lg:hidden"
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
               {openMenu ? (
@@ -277,12 +293,15 @@ export function Header() {
       </div>
 
       {openMenu && (
-        <div className="border-t border-line bg-paper px-4 py-5 md:hidden">
+        <div
+          id="mobile-menu"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper px-4 py-5 lg:hidden"
+        >
           <div className="mb-4">
             <SearchInput placeholder={t("nav.search")} />
           </div>
 
-          <nav className="flex flex-col">{navLinks(true)}</nav>
+          <nav aria-label={t("nav.menu")} className="flex flex-col">{navLinks(true)}</nav>
 
           <div className="mt-5 border-t border-line pt-4">
             {isAuthenticated && user ? (
@@ -314,7 +333,7 @@ export function Header() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="w-full border-t border-line pt-3 text-left text-xs font-medium text-accent"
+                  className="min-h-11 w-full border-t border-line pt-3 text-left text-xs font-medium text-accent"
                 >
                   {t("common.signOut")}
                 </button>
@@ -324,14 +343,14 @@ export function Header() {
                 <Link
                   href="/auth/login"
                   onClick={() => setOpenMenu(false)}
-                  className="rounded-sm border border-line py-2.5 text-center text-xs font-semibold text-ink"
+                  className="flex min-h-11 items-center justify-center rounded-sm border border-line text-xs font-semibold text-ink"
                 >
                   {t("common.signIn")}
                 </Link>
                 <Link
                   href="/auth/register"
                   onClick={() => setOpenMenu(false)}
-                  className="rounded-sm bg-accent py-2.5 text-center text-xs font-semibold text-surface"
+                  className="flex min-h-11 items-center justify-center rounded-sm bg-accent text-xs font-semibold text-surface"
                 >
                   {t("common.signUp")}
                 </Link>
@@ -357,7 +376,7 @@ function MobileLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className="rounded-sm border border-line py-2 text-center text-xs font-medium text-ink-soft transition-colors hover:border-line-strong hover:text-ink"
+      className="flex min-h-11 items-center justify-center rounded-sm border border-line px-2 text-center text-xs font-medium text-ink-soft transition-colors hover:border-line-strong hover:text-ink"
     >
       {label}
     </Link>
@@ -389,7 +408,7 @@ function MenuLink({
       href={href}
       onClick={onNavigate}
       role="menuitem"
-      className={`flex items-center gap-2.5 rounded-sm px-3 py-2 text-xs font-medium transition-colors ${
+      className={`flex min-h-11 items-center gap-2.5 rounded-sm px-3 py-2 text-xs font-medium transition-colors ${
         accent
           ? "text-accent hover:bg-accent-soft"
           : "text-ink-soft hover:bg-paper hover:text-ink"
@@ -418,8 +437,9 @@ function SearchInput({ placeholder }: { placeholder: string }) {
       </span>
       <input
         type="search"
+        aria-label={placeholder}
         placeholder={placeholder}
-        className="h-9 w-full rounded-sm border border-line bg-surface pl-9 pr-3 text-xs text-ink placeholder:text-muted transition-colors focus:border-accent focus:outline-none"
+        className="h-10 w-full rounded-sm border border-line bg-surface pl-9 pr-3 text-xs text-ink placeholder:text-muted transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
       />
     </div>
   );

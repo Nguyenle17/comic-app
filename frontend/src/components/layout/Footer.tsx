@@ -38,18 +38,18 @@ export function Footer() {
 
   return (
     <footer className="mt-16 border-t border-line bg-surface">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <div>
+      <div className="shell py-12">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.6fr_1fr_1fr_1fr] md:gap-10">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2.5">
               <span className="grid h-8 w-8 place-items-center bg-accent font-serif text-base font-semibold text-surface">
                 N
               </span>
               <span className="font-serif text-xl font-semibold tracking-tight text-ink">
-                NStories
+                NNovels
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-xs leading-6 text-ink-soft">
+            <p className="mt-4 max-w-xs text-pretty text-xs leading-6 text-ink-soft">
               {t("footer.tagline")}
             </p>
             <p className="mt-5 text-[11px] text-muted">
@@ -62,10 +62,13 @@ export function Footer() {
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
                 {column.title}
               </h3>
-              <ul className="mt-4 space-y-2.5 text-xs text-ink-soft">
+              <ul className="mt-4 space-y-1 text-xs text-ink-soft">
                 {column.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="transition-colors hover:text-accent">
+                    <Link
+                      href={link.href}
+                      className="inline-flex min-h-8 items-center transition-colors hover:text-accent"
+                    >
                       {link.label}
                     </Link>
                   </li>

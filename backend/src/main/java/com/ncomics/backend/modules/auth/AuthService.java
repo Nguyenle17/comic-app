@@ -27,9 +27,11 @@ import com.ncomics.backend.modules.user.UserRepository;
 import com.ncomics.backend.modules.user.entity.User;
 import com.ncomics.backend.modules.user.enums.Role;
 import com.ncomics.backend.modules.user.enums.UserStatus;
+import lombok.extern.slf4j.Slf4j;
 
 import io.jsonwebtoken.JwtException;
 
+@Slf4j 
 @Service
 public class AuthService {
 
@@ -75,12 +77,17 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+
+        log.info("New user registered: {}", user.getUsername());
+
         return createAuthResult(user, true);
     }
 
     @Transactional
     public AuthResult login(LoginRequest request) {
         String email = normalizeEmail(request.email());
+
+        log.info("Attempting login for user: {}", email);
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -93,6 +100,7 @@ public class AuthService {
                 .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
 
         boolean persistent = request.remember() == null || request.remember();
+        log.info("Login successful for user: {}", user.getUsername());
         return createAuthResult(user, persistent);
     }
 
@@ -130,6 +138,7 @@ public class AuthService {
             storedToken.setRevoked(true);
             refreshTokenRepository.save(storedToken);
 
+            log.info("Refresh token used for user: {}", user.getUsername());
             return createAuthResult(user, storedToken.isPersistent());
         } catch (JwtException | IllegalArgumentException exception) {
             throw new InvalidTokenException(INVALID_REFRESH_TOKEN);
@@ -149,6 +158,7 @@ public class AuthService {
                         refreshTokenRepository.save(token);
                     }
                 });
+        log.info("User logged out: {}", refreshToken);
     }
 
     private AuthResult createAuthResult(User user, boolean persistent) {

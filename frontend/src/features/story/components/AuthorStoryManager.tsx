@@ -14,7 +14,7 @@ import { ApiError } from "@/lib/api-client";
 import { SITE_CONFIG } from "@/lib/site-config";
 import { formatTimeAgo } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonStyles } from "@/components/ui/Button";
 
 const coverUrl = (url?: string) =>
   url?.startsWith("/") ? SITE_CONFIG.apiBaseUrl + url : url ?? null;
@@ -106,11 +106,27 @@ export function AuthorStoryManager() {
   }
 
   if (stories === null) {
-    return <p className="text-sm text-muted">{t("common.loading")}</p>;
+    return (
+      <div className="pt-2" aria-busy="true">
+        <span className="sr-only">{t("common.loading")}</span>
+        <ul className="animate-pulse">
+          {[0, 1, 2].map((row) => (
+            <li key={row} className="flex gap-4 border-b border-line py-5">
+              <div className="h-24 w-16 shrink-0 bg-line/60" />
+              <div className="flex-1 space-y-2.5 py-1">
+                <div className="h-5 w-2/3 bg-line/60" />
+                <div className="h-3 w-1/3 bg-line/40" />
+                <div className="h-3 w-1/4 bg-line/40" />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   return (
-    <div className="border-t border-line pt-6">
+    <div className="pt-2">
       {error && (
         <p
           role="alert"
@@ -121,11 +137,13 @@ export function AuthorStoryManager() {
       )}
 
       {stories.length === 0 ? (
-        <div>
-          <p className="text-sm text-ink-soft">{t("authorStories.empty")}</p>
+        <div className="border border-dashed border-line-strong bg-surface px-6 py-12 text-center">
+          <p className="font-serif text-xl font-semibold text-ink">
+            {t("authorStories.empty")}
+          </p>
           <Link
             href="/author/stories/new"
-            className="mt-5 inline-flex h-11 items-center rounded-sm bg-accent px-6 text-sm font-semibold text-surface transition-colors hover:bg-accent-strong"
+            className={buttonStyles({ variant: "accent", className: "mt-5" })}
           >
             {t("authorStories.emptyCta")}
           </Link>
@@ -139,7 +157,7 @@ export function AuthorStoryManager() {
             return (
               <li
                 key={story.id}
-                className="flex flex-col gap-4 border-b border-line py-5 sm:flex-row sm:items-center"
+                className="grid grid-cols-[4rem_1fr] items-start gap-x-4 gap-y-3 border-b border-line py-5 transition-colors hover:bg-surface sm:flex sm:items-center sm:gap-4"
               >
                 <div className="h-24 w-16 shrink-0 overflow-hidden border border-line bg-paper">
                   {cover ? (
@@ -156,10 +174,11 @@ export function AuthorStoryManager() {
                   )}
                 </div>
 
-                <div className="min-w-0 flex-1">
+                <div className="flex min-w-0 flex-1 flex-col">
                   <div className="flex flex-wrap items-center gap-2">
                     <Link
                       href={"/author/stories/" + story.id + "/edit"}
+                      title={story.title}
                       className="truncate font-serif text-lg font-semibold text-ink transition-colors hover:text-accent"
                     >
                       {story.title}
@@ -195,7 +214,7 @@ export function AuthorStoryManager() {
                   </p>
                 </div>
 
-                <div className="flex shrink-0 items-center gap-2">
+                <div className="col-span-2 flex flex-wrap items-center gap-2 sm:col-span-1 sm:ml-auto sm:shrink-0">
                   <Button
                     type="button"
                     variant="secondary"
@@ -209,7 +228,7 @@ export function AuthorStoryManager() {
                   </Button>
                   <Link
                     href={"/author/stories/" + story.id + "/edit"}
-                    className="inline-flex h-9 items-center rounded-sm border border-line px-3 text-xs font-medium text-ink transition-colors hover:border-line-strong"
+                    className={buttonStyles({ variant: "secondary", size: "sm" })}
                   >
                     {t("authorStories.edit")}
                   </Link>
